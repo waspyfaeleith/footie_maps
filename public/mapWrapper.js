@@ -20,13 +20,6 @@ MapWrapper.prototype = {
       });
   },
 
-  getCurrentCoords: function() {
-    var coords;
-    navigator.geolocation.getCurrentPosition(function(position) {
-      coords = {lat: position.coords.latitude, lng: position.coords.longitude};
-    });
-  },
-
   geoLocate: function() {
     navigator.geolocation.getCurrentPosition(function(position) {
       var center = {
@@ -38,9 +31,6 @@ MapWrapper.prototype = {
       this.currentCoords = center;
       this.addMarker(center);
     }.bind(this));
-    // var coords = this.getCurrentCoords();
-    // this.googleMap.setCenter(coords);
-    // this.addMarker(coords);
   },
 
   addMarker: function(coords) {
@@ -54,7 +44,17 @@ MapWrapper.prototype = {
     var marker = new google.maps.Marker({
       position: stadium.coords,
       map: this.googleMap,
-      icon: 'images/football.png'
+      icon: 'images/football.png',
+      animation: google.maps.Animation.DROP
+    });
+    var info = '<p><h3>' + stadium.team + '</h3></br>' +
+                stadium.name + '</br> Capacity: ' + stadium.capacity + '</p>';
+    google.maps.event.addListener(marker, 'click', function() {
+      console.log('showing info');
+      var infoWindow = new google.maps.InfoWindow({
+        content: info
+      });
+      infoWindow.open(this.map, marker);
     });
     return marker;
   },
@@ -63,7 +63,7 @@ MapWrapper.prototype = {
     var info = stadium.team +
                 '\n' + stadium.name + '\nCapacity: ' + stadium.capacity;
     var marker = this.addStadiumMarker(stadium.coords);
-    marker.addListener('click', function() {
+    google.maps.event.addListener(marker, 'click', function() {
       console.log('showing info');
       var infoWindow = new google.maps.InfoWindow({
         content: info

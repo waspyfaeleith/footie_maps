@@ -42,9 +42,10 @@ var populateDropDown = function(dropDownList) {
 
 var addStadiumMarkers = function(map) {
   stadiums.forEach(function(stadium) {
+    //map.addStadiumInfoWindow(stadium);
     map.addStadiumMarker(stadium);
-  })
-}
+  });
+};
 
 //taken from https://stackoverflow.com/questions/14446447/javascript-read-local-text-file
 function readTextFile(file)
