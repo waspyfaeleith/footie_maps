@@ -47,14 +47,17 @@ MapWrapper.prototype = {
       icon: 'images/football.png',
       animation: google.maps.Animation.DROP
     });
-    var info = '<p><h3>' + stadium.team + '</h3></br>' +
-                stadium.name + '</br> Capacity: ' + stadium.capacity + '</p>';
+    var info = '<p><h4>' + stadium.team + '</h4>' + 
+                'Stadium: ' + stadium.name + 
+                '</br> Capacity: ' + stadium.capacity + 
+                '</br></p>';
     google.maps.event.addListener(marker, 'click', function() {
       console.log('showing info');
       var infoWindow = new google.maps.InfoWindow({
         content: info
       });
       infoWindow.open(this.map, marker);
+      
     });
     return marker;
   },
